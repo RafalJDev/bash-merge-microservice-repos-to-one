@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# todo https://github.com/puzzle/git-combine-repos
+# todo declare
 
 
 function cloneAllRepositories() {
