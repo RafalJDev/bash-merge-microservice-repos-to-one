@@ -4,11 +4,11 @@
 
 
 function cloneAllRepositories() {
-    for httpRepo in "$@"
-    do
+    for httpRepo in "$@" ; do
         git clone ${httpRepo}
     done
 }
+
 
 function isThisDirectory() {
     local currentDirectoryTemp=$1
@@ -27,18 +27,16 @@ function isGitDirOrThisDirOrParentDir() {
 function moveEachElementToNewDirectory() {
     local currentRepoDirectoryTemp=$1
 
-    for currentElement in `find . -maxdepth 1`
-	do
-	    if isGitDirOrThisDirOrParentDir ${currentElement} ${currentRepoDirectoryTemp}; then
-	            continue
-	    fi
-	    mv -f ${currentElement}${currentDirectory}
-	done
+    for currentElement in `find . -maxdepth 1` ; do
+		if isGitDirOrThisDirOrParentDir ${currentElement} ${currentRepoDirectoryTemp}; then
+			continue
+		fi
+		mv -f ${currentElement}${currentDirectory}
+    done
 }
 
 function moveEachRepositoryDirContentToNewDirectory() {
-    for currentRepoDirectory in `find . -type d -maxdepth 1`
-    do
+    for currentRepoDirectory in `find . -type d -maxdepth 1` ; do
         if isThisDirectory ${currentRepoDirectory} ; then
                 continue
         fi
@@ -55,6 +53,14 @@ function moveEachRepositoryDirContentToNewDirectory() {
     done
 }
 
+
+function isAnotherDirNotMainDir() {
+    local mainRepoDirectoryTemp=$1
+    local anotherRepoDirectoryTemp=$2
+
+    return ! ${mainRepoDirectoryTemp} == ${anotherRepoDirectoryTemp}
+}
+
 function mergeMainRepoWithAnotherRepo() {
     local mainRepoDirectoryTemp=$1
     local anotherRepoDirectoryTemp=$2
@@ -69,23 +75,15 @@ function mergeMainRepoWithAnotherRepo() {
     cd ../
 }
 
-function isAnotherDirNotMainDir() {
-    local mainRepoDirectoryTemp=$1
-    local anotherRepoDirectoryTemp=$2
-
-    return ! ${mainRepoDirectoryTemp} == ${anotherRepoDirectoryTemp}
-}
-
 function mergeAllRepositoriesToMainRepository() {
     local mainRepoDirectoryTemp=$1
 
-    for anotherRepoDirectory in `find . -type d -maxdepth 1`
-	do
+    for anotherRepoDirectory in `find . -type d -maxdepth 1` ; do
 	    if isAnotherDirNotMainDir ${mainRepoDirectoryTemp} ${anotherRepoDirectory}; then
-	        continue
+		continue
 	    fi
 	    mergeMainRepoWithAnotherRepo ${mainRepoDirectoryTemp} ${anotherRepoDirectory}
-	done
+    done
 }
 
 mainDirectory=$(echo $PWD)
