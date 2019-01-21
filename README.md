@@ -2,7 +2,7 @@
 Merge git repositories of microservices into one, where each microservice is in directory
 #
 
-###Example usage:
+#### Example usage:
     
     Repositories: a b c
     bash mergeRepos.sh https://github.com/user/a.git https://github.com/user/b.git https://github.com/user/c.git
