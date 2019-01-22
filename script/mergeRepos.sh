@@ -10,7 +10,6 @@ function cloneAllRepositories() {
     done
 }
 
-
 function isThisDirectory() {
     local currentDirectory=$1;
 
