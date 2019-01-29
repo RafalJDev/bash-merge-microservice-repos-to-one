@@ -2,6 +2,8 @@
 
 declare -r mainDirectory=$(echo $PWD)
 
+declare -r mainRepoDirectory="NAME_OF_REPO_DIRECTORY_ALL_HTTP_REPOS_WILL_BE_MERGED_TO"
+
 
 function cloneAllRepositories() {
     for httpRepo in "$@" ; do
@@ -9,6 +11,7 @@ function cloneAllRepositories() {
         echo ""
     done
 }
+
 
 function isThisDirectory() {
     local currentDirectory=$1;
@@ -108,9 +111,6 @@ function mergeRepositories() {
     cloneAllRepositories ${httpRepositories}
 
     moveEachRepositoryDirContentToNewDirectory
-
-
-    mainRepoDirectory=$(ls | sort -n | sed -n 1p)
 
     printf "\n|----------|\n"
     echo "Repository that all other will be merged to: ${mainRepoDirectory}"
